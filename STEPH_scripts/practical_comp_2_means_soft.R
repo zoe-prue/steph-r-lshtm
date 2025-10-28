@@ -111,7 +111,6 @@ mean_ci(bab9$m_age, conf.level = 0.99)
 boxplot(bweight ~ sex, data = bab9, ylab = "Birthweight (g)")
 title(main = "Boxplots of Birthweights Between Males and Female Infants")
 
-
 # t-test for the difference between means in bweights bw the boys and girls
 
 t.test(bab9$bweight, mu = 3300)
@@ -137,7 +136,7 @@ bab9 |>
 
 ## DISCUSS: What do you conclude from this test?
 ## ANSWER: There is a very low p value (<0.001) 
-## meaning that there is astrong evidence to reject the null hypothesis 
+## meaning that there is a strong evidence to reject the null hypothesis 
 ## that there is no difference between the two groups
 
 t.test(bab9$bweight ~bab9$sex)
