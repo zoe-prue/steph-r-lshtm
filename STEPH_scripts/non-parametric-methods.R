@@ -39,9 +39,19 @@ ggplot(cmv_set, aes(x=cmv)) +
   ylab("Counts") +
   ggtitle("Histogram of CMV counts")
 
+# ggplot(cmv_set, aes(x=cmv)) +
+#   geom_boxplot(color = "black", fill = "#648FFF") +
+#   xlab("CMV") +
+#   ggtitle("Histogram of CMV counts") +
+#   coord_flip()
+
+# or boxplot in base r
+
+boxplot(cmv_set$cmv, col="#648FFF" , ylab="CMV", title = "CMV counts", main = "CMV distribution")
+
 # by looking at a histogram, is it clear that the data are non-normally distributed
 
-# Q3. Given your response to the above question, how might you better summarise the CMV data? 
+# Q3. Given your response to the above question, how might you better summarize the CMV data? 
 # Run an appropriate R command to find out these summary statistics.
 
 median(cmv_set$cmv) # less volatile than the mean
@@ -139,7 +149,6 @@ wilcox.test(cmv_set$cmv, mu = 1)
 # Filter out the  17 people with a TB diagnosis in these data, 
 # look at the distribution of SBP among them, and run an appropriate test of her hypothesis.
 
-
 cmv_set %>%
   filter(tb2 == "TB") %>%
   summarize(median_sbp_tb = median(sbp, na.rm = TRUE))
@@ -177,25 +186,24 @@ wilcox.test(non_par$sfa, non_par$sfb, paired = TRUE)
 
 # p-value = 0.002625
 # meaning that there is strong evidence to reject the null hypothesis that the two groups are equal
-# there is strong evidence that there is a difference in the way the two observers measure skinfolds]
+# there is strong evidence that there is a difference in the way the two observers measure skinfolds
 
 # Q9. For comparison, run a t-test. What do you conclude?
 
 # t.test(non_par$sfa ~ non_par$sfb) or t.test(non_par$sfa ~ non_par$sfb, var.equal = FALSE)?
 
-t.test(non_par$sfa, non_par$sfb, paired = TRUE, alternative = "two.sided")
+t.test(non_par$sfa, non_par$sfb, paired = TRUE, var.equal = TRUE)
 
 # p-value = 0.001547
 
-t.test(non_par$sfa, non_par$sfb, paired = TRUE, alternative = "two.sided", var.equal = FALSE)
+t.test(non_par$sfa, non_par$sfb, paired = TRUE, var.equal = FALSE)
 
 # p-value = 0.001547
 
 # The p-value provides strong evidence to reject the null hypothesis that the difference in measurements is zero
 # the p-value is smaller and less conservative
 
+# something interesting to look into
 
-
-
-
+?qqnorm() 
 
