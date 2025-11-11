@@ -70,12 +70,47 @@ OddsRatio(net_matrix, conf.level = 0.95)
 # estimated odds ratio is 0.3760190
 # (0.2030803, 0.6962286) 95% CI
 
+# Now create a new matrix and use the same functions to calculate the risk of sleeping without a net, 
+# rather than the protective effect of sleeping under a net. 
+
+net_matrix_risk <- matrix(c(46,41,27,65), nrow = 2, byrow = TRUE)
+rownames(net_matrix) <- c("No permethrin net", "Permethrin net")
+colnames(net_matrix) <- c("Enlarged spleen", "Normal spleen")
+net_matrix_risk
+
+# risk difference for risk of not using nets 
+
+BinomDiffCI(46, 87,27, 91, method=c("wald"))
+
+# # estimated odds ratio is 0.2320323
+# (0.0912808, 0.3727839) 95% CI
+
+# relative risk
+
+RelRisk(net_matrix_risk, conf.level = 0.95, method = "wald")
+
+# estimated relative risk is 1.801618
+# (1.245295, 2.606472) 95% CI
+
+# odds ratio
+
+OddsRatio(net_matrix_risk, conf.level = 0.95)
+
+# estimated odds ratio is 2.700994 - notice this is the inverse of the original!
+# (1.459847, 4.997351) 95% CI
+
 # E. Paired Data
 
 paired_data <- matrix(c(28, 21, 8, 61), nrow = 2, byrow = TRUE)
 rownames(paired_data) <- c("No restrictions", "Some restrictions")
 colnames(paired_data) <- c("No restrictions", "Some restrictions")
 paired_data
+
+# calculating odds ratio for discordant pairs
+# got 2.625 on pen and paper
+# we don't have a package provided in the practical to calculate the odds ratio in R
+
+# measurements are more similar, have to take into account when calculating
 
 # Perform McNemar's test without continuity correction for chi-squared approximation
 
@@ -85,10 +120,14 @@ mcnemar_exact <- mcnemar.test(paired_data, correct = FALSE)
 # continuity correction is an adjustment made in a chi-square test for 2x2 contingency tables 
 # to account for the fact that the chi-square distribution is continuous while the data is discrete.
 # it is applied when sample size is small, and is more conservative of an approach than without
+# I don't know how to do continuity correction on pen and paper, it seems
 
 # Perform McNemar's test with continuity correction for chi-squared approximation
+# very standard to calculate this way
 
 mcnemar_chi <- mcnemar.test(paired_data, correct = TRUE)
 
+# got chi-squared equals 4.965517, same as on pen and paper (4.966)
 
+# everything aligns with the answers I got on pen and paper!
 
