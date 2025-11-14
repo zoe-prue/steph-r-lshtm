@@ -185,8 +185,9 @@ table(data_mcc$case, data_mcc$control)
 
 ## Q9. Calculate the odds ratio by hand
 # use discordant pairs (r/s)
-(8/8)/(3/8)
+(8/3)
 # = 2.666667
+# can be inverted (e.g. 3/8)
 
 # odds ratio using code 
 
