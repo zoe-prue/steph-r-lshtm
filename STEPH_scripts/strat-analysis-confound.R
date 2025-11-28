@@ -57,6 +57,7 @@ chisq.test(creche$socio, creche$creche)
 creche_low <-creche|>
   filter(socio==1)
 CrossTable(creche_low$lrti, creche_low$creche, prop.r = TRUE, chisq = TRUE)
+?CrossTable()
 
 creche_avg <-creche|>
   filter(socio==0)
@@ -130,7 +131,8 @@ WoolfTest(tab1)
 # on lower respiratory tract infection when socio-economic status was ignored? 
 # The OR was lowered when the SES factor was removed. 
 # This means that SES was acting as a confounder and contributing to the association between
-# creche attendance and lrti (SES was a negative? confounder)
+# creche attendance and lrti (SES was a positive? confounder)
+# pathway: low SES -> creche AND SES -> lrti AND creche -> lrti
 
 # Q8. Why has it decreased?
 # SES was a negative confounder, which means it added to the association between creche and lrti
@@ -144,12 +146,47 @@ WoolfTest(tab1)
 # the OR range does not include the null value of 1 (which would mean no association between creche and lrti)
 # which does mean that there is good evidence to reject the null hypothesis
 
+## OPTIONAL MATERIAL ##
 
+# analyzing frequency records
 
+bednets <- read.csv("bednets_optional.csv")
 
+# data here in bednets are coded: 1 is yes, 0 is no
 
+# expand frequency records to become individual records
+# using tidyr uncount() function
 
+expanded_data <- bednets |>
+  uncount(freq)
 
+# drops freq afterwords bc it becomes redundant 
+
+CrossTable(expanded_data$bednet, expanded_data$spleen, prop.r = TRUE, chisq = TRUE)
+
+# stratify by village for futher analysis of confounding
+
+expanded_data_v1 <-expanded_data |>
+  filter(village==1)
+CrossTable(expanded_data_v1$bednet, expanded_data_v1$spleen, prop.r = TRUE, chisq = TRUE)
+
+expanded_data_v2 <-expanded_data |>
+  filter(village==2)
+CrossTable(expanded_data_v2$bednet, expanded_data_v2$spleen, prop.r = TRUE, chisq = TRUE)
+
+# Q10. Examine the association between bednets and having an enlarged spleen, 
+# and investigate if it is confounded by village.
+# with the villages combined, the p-value is < 0.002, meaning that there is strong evidence 
+# to reject the null hypothesis that there is no association between bednet usage and spleen enlargment.
+# this means there appears to be a strong association.
+# the odds ratio could also be calcuated to further confirm this and help assess confounding later.
+# when stratified by village, village 1 shows a p-value of 0.434, meaning that there is insifficient evidence
+# to reject the null hypothesis that in village 1, bednet usage is not associated with spleen enlargement.
+# this means that there does not appear to be an association between bednet usage and spleen enlargement in village 1.
+# Furthermore, village 2 shows a p-value of 0.823, meaning that there is also insufficient evidence
+# to reject the null hypothesis that in village 2, bednet usage is not associated with spleen enlargement.
+# this means that there does not appear to be an association between bednet usage and spleen enlargement in village 2 as well.
+# Overall, this provides evidence for the idea that village is a confounder for bednet usage and spleen enlargment
 
 
 
