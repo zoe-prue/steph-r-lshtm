@@ -152,13 +152,12 @@ plot(nonlinear$x, nonlinear$y, xlab="x", ylab="y")
 lines(nonlinear$x, nonlinear$y)
 # there is a seemingly nonlinear, parabolic relationship
 # the line of best fit shows the relationship and that it is definitely not linear
-cor(nonlinear$x, nonlinear$y)
 # the pearson's coefficient for fcorrelation shows almost no evidnece of a linear relationship (r=0.1152191)
 model_3<-lm(x ~ y, data=nonlinear)
 summary(model_3)
 confint(model_3)
 coef(model_3)
-# the regressiona anloysis shows little evidence of a linear relationship
+# the regression analysis shows little evidence of a linear relationship
 # the beta is 0.004492047, meaning on average, there is little evidence 
 # of a consistent increase in x in relation to y
 # this si especially true because the 95% confidence interval contains zero (-0.003271296, 0.01225539)
