@@ -105,6 +105,7 @@ summary(model3)
 
 model4 <-lm(depscore ~ as.factor(type_prolapse) + age, data = depress)
 summary(model4)
+confint(model4)
 
 # answer to 8:
 # the beta_1 and beta_2 rise with the severity of prolapse
@@ -115,9 +116,12 @@ summary(model4)
 # there is not sufficient evidence to reject the null hypothesis 
 # that there is not an association between depression score and prolapse when adjusting for age
 # meaning that age is likely a confounder
+## Just notice the difference in the beta after adjustment ##
 
 # Q9. What is the effect of type of prolapse on depression score adjusted for age?
 # the prolapse is not significantly associated with depression when adjusted for confounding
+# also examine the confidence intervals for each regression coefficient!!!
+# no evidence against null hypothesis that the slope of the regression between the depression score and type of prolapse is zero
 
 ### DO THE EXTRA PROBLEMS? ###
 

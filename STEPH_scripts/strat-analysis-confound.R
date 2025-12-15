@@ -41,7 +41,7 @@ chisq.test(creche$lrti, creche$creche)
 
 creche_socio_table <- CrossTable(creche$socio, creche$creche)
 
-# chi-squared test for association between SES and chreche attendance
+# chi-squared test for association between SES and creche attendance
 
 chisq.test(creche$socio, creche$creche) 
 
@@ -179,8 +179,8 @@ CrossTable(expanded_data_v2$bednet, expanded_data_v2$spleen, prop.r = TRUE, chis
 # with the villages combined, the p-value is < 0.002, meaning that there is strong evidence 
 # to reject the null hypothesis that there is no association between bednet usage and spleen enlargment.
 # this means there appears to be a strong association.
-# the odds ratio could also be calcuated to further confirm this and help assess confounding later.
-# when stratified by village, village 1 shows a p-value of 0.434, meaning that there is insifficient evidence
+# the odds ratio could also be calculated to further confirm this and help assess confounding later.
+# when stratified by village, village 1 shows a p-value of 0.434, meaning that there is insufficient evidence
 # to reject the null hypothesis that in village 1, bednet usage is not associated with spleen enlargement.
 # this means that there does not appear to be an association between bednet usage and spleen enlargement in village 1.
 # Furthermore, village 2 shows a p-value of 0.823, meaning that there is also insufficient evidence

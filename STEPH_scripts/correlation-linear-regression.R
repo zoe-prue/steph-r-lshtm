@@ -27,7 +27,7 @@ summary(bab9)
 hist(bab9$bweight)
 
 # often we've been stratifying into categorical variables
-# we lose information this way becasue the difference between values in the 49th and 50th percentile
+# we lose information this way because the difference between values in the 49th and 50th percentile
 # (for example) are not significantly different, probably
 
 # plot simple scatter plot
@@ -51,15 +51,15 @@ abline(lm(bab9$bweight ~ bab9$gestwks))
 # we hypothesize that gestweeks is the exposure and bweight is the outcome 
 # because of their temporal and biological relationship
 
-# lienar regression equation
+# linear regression equation
 # y_i= α + βx_i + ε_i
 # where y_i is the measured individuals values of y, bweight
 # x_i is the individual measured values for the exposure variabled, gestweeks
 # alpha is the expected constant when y=0
-# alpha may not be interpretable, as values oputside of the measured x may not be able to interpret
+# alpha may not be interpretable, as values outside of the measured x may not be able to interpret
 # we could make a case that the zygote is equal to zero weight
 # β is the change in mean expected birthweight per additional week of gestational age
-# beta is a statistical aprameter assumed about the population
+# beta is a statistical parameter assumed about the population
 # episilon is the error, essentially, or residuals, which were not accounted by other variables
 
 model_1<-lm(bweight ~ gestwks, data=bab9)
@@ -81,6 +81,7 @@ coef(model_1)
 # alpha, or intercept, is -4865.2452 grams, and the beta regression coeff is 206.6412 grams
 # y_i = -4865.2452 + (206.6412)(x_i) + -6.97
 # the coeff for gestweeks is uninterpretable, as there is no way a fetus can be a negative mass
+# for every increase in gestweeks, a baby gets 207 grams bigger
 
 # Q3. What are the standard errors of the two parameter estimates? 
 # How strong is the evidence against the null hypothesis of no linear relationship 
@@ -88,7 +89,7 @@ coef(model_1)
 # the standard error (standard deviations of the sample from the true population parameter)
 # for alpha is 290.081 grams
 # for beta is 7.485 grams
-# ALSO, THE NULL HYPOTHESIS DOESN'T INCLUDE ZERO -> more certainty that the true value of ebta is not zero
+# ALSO, THE NULL HYPOTHESIS DOESN'T INCLUDE ZERO -> more certainty that the true value of beta is not zero
 # the evidence against the null hypothesis is strong: 
 # the p-value for the intercept (alpha) is <2e-16 ***, indicating strong evidence to reject the null hypothesis
 # meaning that there is strong evidence that you will observe values as or more extreme than the intercept
@@ -121,13 +122,26 @@ coef(model_2)
 # this means there is not evidence to reject the null hypothesis
 # that there is no relationship between m_age and bweight
 
+# FROM SOLUTIONS:
+#A4: We can use the coefficient estimate and the standard error to conduct a t-test
+# of the hypothesis that matage=0
+# t = (b - B)/se(b), where B = the value of matage under the null hypothesis, i.e. 0.
+# t = (5.69 - 0)/6.67 = 0.85
+# df = 639
+# You can look up the 2-tailed p-value where t=0.85 with 639 degrees of freedom in a 
+# t-table. You can also derive it from R. 
+2*pt(0.85, 639, lower.tail = FALSE)
+# p=0.396
+# The value is not identical to 0.394 in the model because of rounding error in our 
+# calculations.
+
 ## CORRELATION ##
 
-# examine the relationship ebtween two variables without assigning one as an exposure and one as outcome
+# examine the relationship between two variables without assigning one as an exposure and one as outcome
 # The association is then measured by the correlation between the two variables
 cor(bab9$bweight, bab9$gestwks)
 # correlation coeff r = 0.7375501
-# this always lies betwwen -1 and 1, which r=0 meaning no linear relationship
+# this always lies between -1 and 1, which r=0 meaning no linear relationship
 # r= -1 being a negative relationship, and r=1 being a positive relationship
 
 # Q5. What is the value of the correlation coefficient calculated above? What does this mean? 
@@ -152,7 +166,7 @@ plot(nonlinear$x, nonlinear$y, xlab="x", ylab="y")
 lines(nonlinear$x, nonlinear$y)
 # there is a seemingly nonlinear, parabolic relationship
 # the line of best fit shows the relationship and that it is definitely not linear
-# the pearson's coefficient for fcorrelation shows almost no evidnece of a linear relationship (r=0.1152191)
+# the pearson's coefficient for correlation shows almost no evidence of a linear relationship (r=0.1152191)
 model_3<-lm(x ~ y, data=nonlinear)
 summary(model_3)
 confint(model_3)
@@ -160,10 +174,11 @@ coef(model_3)
 # the regression analysis shows little evidence of a linear relationship
 # the beta is 0.004492047, meaning on average, there is little evidence 
 # of a consistent increase in x in relation to y
-# this si especially true because the 95% confidence interval contains zero (-0.003271296, 0.01225539)
+# this is especially true because the 95% confidence interval contains zero (-0.003271296, 0.01225539)
 # meaning there is no certainty that the null hypothesis is false
 # the p-value of 0.254 for the beta regression coeff also gives little evidence that the null hypothesis is false
 # meaning that there is little evidence to reject the hypothesis that there is no relationship between the variables
+# transformation of data may be appripriate
 
 
 
