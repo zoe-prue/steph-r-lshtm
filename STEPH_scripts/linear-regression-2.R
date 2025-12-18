@@ -8,7 +8,7 @@
 library(dplyr)
 library(rio)
 library(tidyr)
-install.packages("lmtest")
+# install.packages("lmtest")
 library(lmtest)
 
 ###################################
@@ -53,7 +53,8 @@ abline(lm(depress$depscore ~ depress$children)) # notice order of exposure and o
 # c) Is the association between depression score and number of living children positive or negative?
 # the association is positive, as seen by the positive regression coefficient
 
-# d) By how much does the depression score increase for each extra living child? (i.e. what is the regression coefficient for children)
+# d) By how much does the depression score increase for each extra living child? 
+# (i.e. what is the regression coefficient for children)
 # For each living child, the depression score increased by 0.38317 (p < 2e-16)
 
 # e) Is there any evidence against the null hypothesis that the slope of the line is zero?
@@ -130,12 +131,25 @@ summary(pro_t_model)
 
 # Q3. Compare the coefficients in the regression analysis to the box plots you made earlier?
 # Which box is being compared to which for β_1? β_2?
-# There is a greater increase for the change from no to moderate prolapse (+1.02 depression score)
+# There is a lesser increase for the change from no to moderate prolapse (+1.02 depression score)
 # compared to the greater increase (+1.26 depression score) between no and severe prolapse
 
-# notice that the above analysis has no p-values
+# LIMTATIONS OF MULTIPLE SIMPLE LINEAR REGRESSION MODELS 
+# notice that the above analysis has no p-values!!
 # no comparison done above between the moderate and severe prolapse groups
+# each predictive model (each simple linear regression) does not take into account the other variables
+# prone to multiple testing. -> inflated type I error rate
+# coefficients not comparable across models
+# does not test an overall effect
+# asks the question: does this exposure matter alone?
+
 # we can test the null hypothesis that both β1 and β2 are equal to 0 using a global Wald test
+# which assesses all coefficients at the same time
+# asks: is the exposure as a whole associated with Y?
+# one p-value for joint effect
+# accounts for correlation between coefficients
+# controls for type I error by not doing multiple testing
+# asks the question: does this exposure matter at all/belond in the model?
 
 waldtest(pro_t_model, terms = "as.factor(type_prolapse)")
 
@@ -148,5 +162,23 @@ waldtest(pro_t_model, terms = "as.factor(type_prolapse)")
 # we find that there is strong evidence against the null because there is a significant difference (p=1.004e-08)
 # test several variables -> Wald is positive, see which beta has contributed with the simple regression
 # Helpful if we had multiple variables in regression line
+
+# in more detail (about the Wald test):
+# The global Wald test evaluates a joint hypothesis whether all regression coefficients for a set of explanatory variables 
+# are equal to zero (mathematically H0:β1=β2=β3=⋯=0), and therefore asks whether the explanatory variables, 
+# collectively, have any association with the outcome.
+# If this global Wald test shows no evidence against the null hypothesis, 
+# then from a technical standpoint it is possible that an individual coefficient 
+# would show strong evidence against the null hypothesis (e.g. H0: β1==0) on its own. 
+# all analysis are guided by research question being asked
+# for example, for a clinical trial comparing several treatment or exposure groups,
+# we care about an OVERALL difference between the groups, assessed by the Walk test
+# if the goal is to see what specific exposures differ from each other
+# individual Wald tests or pairwise comparisons are needed,
+# regardless of whether the global Wald test was significant
+
+
+
+
 
 

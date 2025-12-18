@@ -5,7 +5,7 @@
 ###################################
 # library calls
 
-install.packages("MESS")
+# install.packages("MESS")
 library(MESS)
 
 ###################################
@@ -92,19 +92,36 @@ power.t.test(n = NULL, delta = 0.2, sd=0.4, power = 0.9, sig.level = 0.05)
 # Would the required sample size go up or down? Can you estimate by how much?
 # The smaller clinical difference (delta) should required more participants to power the study
 # i.e. a smaller difference in means should increase n
+# In fact, it will increase by a factor of (about) 4. 
+# This is because the difference has decreased by a factor 
+# of 2, and the sample size is related to the square of the difference. 
+# The difference is not exactly 4 due to rounding. Try the following:
 
 power.t.test(n = NULL, delta = 0.1, sd=0.4, power = 0.9, sig.level = 0.05)
 
-# i was right, in increases n
+# i was right, in increases n by a factor of 4
 
 # Q3. If, when you collected your data, you noticed that the standard deviation in both groups was 0.2, 
 # not 0.4 as you had estimated. What effect will this have on your power?
 # SD^2 is in the numerator of the equation for n
 # meaning that a decrease in the SD should decrease the n calculated
+# you will now have MORE power. In other words, with the same power of 0.9, 
+#you will need a smaller sample size to detect the same difference.
+#This is because the values in each group were more tightly centred around
+#the mean, so we can be more certain about the mean in each group. 
+# #You can also think back to the formula for standard error 
+#- if the standard deviation is smaller, than so will be
+#the standard error. With a smaller standard error we are more likely to 
+#get a low p-value, and our confidence interval will be narrower - both 
+#of these are RELATED to increased power.
+#The following command shows that if you had known you would observe an 
+#SD of 0.2 you would have required just a quarter of the previous sample
+#size. As the SD decreased by a factor of 2, the sample size decreased by
+#a factor of two squared = 4.
 
 power.t.test(n = NULL, delta = 0.1, sd=0.2, power = 0.9, sig.level = 0.05)
 
-# i does, i was correct
+# it does, i was correct
 
 ## COMPARING TWO MEANS - POWER AND RATIO OF GROUP SIZES SPECIFICED ##
 
@@ -118,7 +135,6 @@ power_t_test(n = NULL, delta = 0.2, sd=0.4, power = 0.8, sig.level = 0.05, ratio
 
 # sometimes we just want to work backwards!
 
-
 # no but really funding can be tight and you might not be able to recruit as many ppl as wanted
 # and you have to see how powered the study could be
 
@@ -130,11 +146,9 @@ power.prop.test(n=600, p1=0.1, p2=0.15, power = NULL, sig.level = 0.05)
 # 25% chance of a false negative - that your study would not find evidence for a difference 
 # between the sample proportions even if there was such a difference between the groups
 
-# what about with a larger clinical differnece (delta) to be observed?
+# what about with a larger clinical difference (delta) to be observed?
 
 power.prop.test(n=600, p1=0.1, p2=0.2, power = NULL, sig.level = 0.05)
-
-
 
 # see that the power increases, because its easier to detect this difference, 
 # and therefore the risk of a type II error is lower

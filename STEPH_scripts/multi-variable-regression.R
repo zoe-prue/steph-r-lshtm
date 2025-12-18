@@ -1,4 +1,4 @@
-# Multiple linear regression
+# Multi-variable regression
 # 2/12/2025
 # explore multiple linear regression
 
@@ -61,6 +61,23 @@ confint(model2)
 # However, the children coeff this has a wide confidence interval containing the null value 
 # and an extremely high p-value meaning that this finding is insignificant
 # meaning that age could be a confounder because the coefficient changed between the first and second regression
+# (see the simple linear regression done above)
+
+# A2 (given by answer key)
+# for a given age, the depression score decreases on average by 0.00486 for every
+# extra living child (β_1). This is very different to the increase (0.38317) that
+# was found for children when age was not adjusted for (β_2). The fact that the 
+# result is very different when age is included in the regression equation suggests
+# that age is confounding the association between depression score and number of
+# living children. We cannot simply ignore age when looking at the relationship 
+# between depression score and the number of living children
+
+# Zoe's notes on A2:
+# it seems like we are comparing the crude beta from the simple linear regression
+# to the new beta for children from the nulti-variable regression
+# which considers age as a factor. 
+# because the beta for children was difference when age was included
+# indicates that age is a confounder for the depression score and number of living children association
 
 # Q3. What is the effect of number of children on depression score adjusted for age?
 # The effect of children on the number of children on depression score adjusted for age is insignificant
@@ -81,6 +98,39 @@ confint(model2)
 # we would do a simple linear regression showing the effect of age (and its beta) on the depression score
 # if there;s another confounder, I would adjust for that 
 # can talk about unmeasured confounding, but this is beyond this course
+
+# Given answer:
+# # A4: We would not be interested in this because the number of children may be on 
+# the causal pathway linking age and depression. 
+# age -- > children --> depression 
+
+# Zoe';s notes on given answer:
+# i was wrong in my initial answer for Q4
+# because I did not see children as a mediator
+
+## EXTRA FROM CHATGPT ABOUT EFFECT MODIFICATIN ##
+model3 <- lm(Y ~ X * Z, data = dat)
+summary(model3)
+# Coefficients:
+#   Estimate  Std. Error  t value  Pr(>|t|)
+# (Intercept)      5.00
+# X                1.00       0.40      2.50     0.013
+# Z                2.00       0.50      4.00    <0.001
+# X:Z              1.50       0.60      2.50     0.014
+
+# How to interpret this
+# 
+# β_X = 1.00 → effect of X when Z = 0
+# 
+# β_X:Z = 1.50 → difference in effect of X when Z = 1
+# 
+# So:
+#   
+# Effect of X when Z = 0 → 1.00
+# 
+# Effect of X when Z = 1 → 1.00 + 1.50 = 2.50
+# 
+# Conclusion: There is effect modification by Z
 
 ## DOES AGE CONFOUND THE RELATIONSHIP BW PROLAPSE AND DEPRESSION? ##
 
@@ -123,5 +173,20 @@ confint(model4)
 # also examine the confidence intervals for each regression coefficient!!!
 # no evidence against null hypothesis that the slope of the regression between the depression score and type of prolapse is zero
 
+# given answer:
+# A9: Returning to the coefficient for the effect of type of prolapse adjusting for
+# age, we look at the confidence interval for the β_1 coefficient: it goes from about
+# -0.2892 to 0.4570 when prolapse status changes from no prolapse to moderate 
+# prolapse, while the CI is -0.1441 to 0.8272 when prolapse status changes from no 
+# prolapse to severe prolapse. In both cases the CI covers zero, and the probability
+# of observing this result or a result more extreme than this p = 0.66 and p = 0.17 
+# tively. Therefore, there is no evidence against the null hypothesis that the slope
+# of the relationship between depression score and type of prolapse is 0, and our 
+# final conclusion would be that, after controlling for the confounding effect of 
+# age, depression among these women does not appear to be associated with the type
+# of prolapse.
+
+
 ### DO THE EXTRA PROBLEMS? ###
+# its optional material about centering
 
